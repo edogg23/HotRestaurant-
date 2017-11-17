@@ -41,19 +41,21 @@ var people = [
 }];
 
 
-var Reservation = function(name, phone, email, uniqueID) {
-	this.name = name;
-	this.phone = phone;
-	this.email = email;
-	this.uniqueID = uniqueID;
-}
+var Reservation = function(name, phone, email, id){
 
-var Waitlist = function(name, phone, email, uniqueID) {
 	this.name = name;
 	this.phone = phone;
 	this.email = email;
-	this.uniqueID = uniqueID;
-}
+	this.id = id;
+
+}; 
+
+// var Waitlist = function(name, phone, email, id) {
+// 	this.name = name;
+// 	this.phone = phone;
+// 	this.email = email;
+// 	this.id = id;
+// }
 
 var reservationArray = [];
 
@@ -72,8 +74,34 @@ app.get("/reserve", function(req, res){
 });
 
 
-app.get("/api", function(req, res) {
-	res.json(people);
+app.get("/api/tables", function(req, res) {
+	res.json(reservationArray);
+});
+
+app.get("/api/waitlist", function(req, res){
+	res.json(waitlistArray);
+});
+
+app.post("/reserve", function(req, res){
+	// console.log(req.body);
+	console.log(reservationArray);
+
+	var newPerson = new Reservation(req.body.name, req.body.phone, req.body.email, req.body.id);
+	
+	if(reservationArray.length <= 5) {
+			reservationArray.push(newPerson);
+			console.log("Reservation: ", reservationArray);
+		}
+
+	else{
+			waitlistArray.push(newPerson);
+			console.log("Waitlist ", waitlistArray);
+		}
+
+	
+
+	
+	res.end();
 });
 
 app.listen(PORT, function(err, res) {

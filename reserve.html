@@ -67,7 +67,7 @@
 		<div class="row">
 			<div class="column col-xs-12">
 
-				<div class="panel panel-primary" id="reservations">
+				<div class="panel panel-primary" id="reservation">
 					<div class="panel-heading">
 						<p>Panel heading</p>
 					</div>
@@ -87,17 +87,17 @@
 <script type="text/javascript">
 	$("#submitForm").on("click", function() {
 		event.preventDefault();
-		$.post("./reserve",
+		$.post("/reserve",
 			{
-				name: "#text1",
-				phone: "#text2",
-				email: "#text3",
-				id: "#text4",
-			}
+				name: $("#text1").val(),
+				phone: $("#text2").val(),
+				email: $("#text3").val(),
+				id: $("#text4").val()
+			}	
 		).done(function() {
-			$("form").empty();
+			$("#text1, #text2, #text3, #text4").val("");
 			console.log("Submitted!!");
-			$(".panel-body").text("Thanks for submitting your reservation!");
+			$("#reservation").text("Thanks for submitting your reservation!");
 		});
 	});
 
